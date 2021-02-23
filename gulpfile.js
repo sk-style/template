@@ -37,7 +37,10 @@ gulp.task('sass', function() {
 		.pipe(plumber({ errorHandler: notify.onError('Error: <%= error.message %>') }))
 		.pipe(sassGlob())
 		.pipe(sass({ outputStyle: 'expanded' }))
-		.pipe(postcss([autoprefixer()]))
+		.pipe( postcss([ autoprefixer({
+			'overrideBrowserslist': ['last 2 version', 'ie >= 11', 'Android >= 5'],
+			cascade: false}
+		) ]) )
 		.pipe(postcss([cssdeclsort({ order: 'alphabetical' })]))
 		.pipe(mmq())
 		.pipe(gulp.dest('./css'));
